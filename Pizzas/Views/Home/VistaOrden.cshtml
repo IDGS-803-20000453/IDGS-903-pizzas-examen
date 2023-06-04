@@ -1,0 +1,150 @@
+﻿@model Pizzas.Models.Orden
+
+
+@using (Html.BeginForm("VistaOrden", "Home"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    <h4>Orden</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NombreCompleto, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.NombreCompleto, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NombreCompleto, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DireccionC, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DireccionC, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DireccionC, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TelefonoC, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.TelefonoC, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TelefonoC, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Fechacompra, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Fechacompra, new { @type = "date", @class = "form-control datepicker" })
+                            @Html.ValidationMessageFor(model => model.Fechacompra, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <h2>Tamaño</h2>
+                    <div class="form-check">
+                        @Html.RadioButtonFor(model => model.Tamanio, "1", false)
+                        @Html.Label("Chica $40")
+
+                    </div>
+                    <div class="form-check">
+                        @Html.RadioButtonFor(model => model.Tamanio, "2", false)
+                        @Html.Label("Mediana $80")
+
+                    </div>
+                    <div class="form-check">
+                        @Html.RadioButtonFor(model => model.Tamanio, "3", false)
+                        @Html.Label("Grande $120")
+
+                    </div>
+                    <div class="form-check">
+                        @Html.EditorFor(model => model.Ingredientes1, false)
+                        @Html.Label("jamon")
+
+                    </div>
+                    <div class="form-check">
+                        @Html.EditorFor(model => model.Ingredientes2, false)
+                        @Html.Label("Champiñon")
+
+                    </div>
+                    <div class="form-check">
+                        @Html.EditorFor(model => model.Ingredientes3, false)
+                        @Html.Label("Piña")
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CantidadP, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CantidadP, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CantidadP, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Crear Orden" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tamaño</th>
+                            <th>Ingredientes</th>
+                            <th>Número de Pizzas</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.Pizzas != null)
+                        {
+                            for (int i = 0; i < (ViewBag.Pizzas).Length; i++)
+                            {
+                                var pizzasCom = ViewBag.Pizzas[i].Split('.');
+                                <tr>
+
+                                    @for (int j = 0; j < pizzasCom.Length; j++)
+                                    {
+                                        <td>@pizzasCom[j]</td>
+                                    }
+                                </tr>
+                            }
+
+                        }
+                        else
+                        {
+                            <p>Sin informacion</p>
+                        }
+
+                    </tbody>
+                </table>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+}
+
+@using (Html.BeginForm("VistaOrdenDetalle", "Home"))
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Ver Detalle Orden" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

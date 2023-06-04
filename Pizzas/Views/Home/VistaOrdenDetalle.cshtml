@@ -1,0 +1,75 @@
+﻿@model Pizzas.Models.Orden
+<h1>Nota de Compra</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <table>
+                <tr>
+                    <th>Cliente:</th>
+                    <td>@ViewBag.Nombre</td>
+                </tr>
+                <tr>
+                    <th>Dirección</th>
+                    <td>@ViewBag.Direccion </td>
+                </tr>
+                <tr>
+                    <th>Teléfono</th>
+                    <td>@ViewBag.Telefono</td>
+                </tr>
+                <tr>
+                    <th>Fecha de Compra</th>
+                    <td>@ViewBag.FechaCompra</td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="col-md-6">
+            <h2>Pizzas Ordenadas</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tamaño</th>
+                        <th>Ingredientes</th>
+                        <th>Número de Pizzas</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.Orden != null)
+                        { var total2 = 0;
+                            for (int i = 0; i < (ViewBag.Orden).Length; i++)
+                            {
+                                var pizzasCom = ViewBag.Orden[i].Split('.');
+                            <tr>
+                                @for (int j = 0; j < pizzasCom.Length; j++)
+                                {
+                                    <td>@pizzasCom[j]</td>
+                                    if (j == 3)
+                                    {
+                                        total2 = total2 + Int32.Parse(@pizzasCom[j]);
+                                    }
+
+                                }
+                            </tr>
+                            }
+                        <h3>Total: $@total2</h3>
+                    }
+                    else
+                    {
+                        <p>Sin informacion</p>
+                    }
+
+                </tbody>
+                
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
